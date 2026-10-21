@@ -2,7 +2,7 @@ name: Fetch TweetFeed Blocklist
 
 on:
   schedule:
-    # Runs automatically every 20 minutes
+    # Runs automatically every 25 minutes
     - cron: '*/25 * * * *'
   # Allows manual triggers from the Actions tab
   workflow_dispatch: 
