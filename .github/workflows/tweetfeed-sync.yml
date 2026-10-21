@@ -7,11 +7,15 @@ on:
   # Allows manual triggers from the Actions tab
   workflow_dispatch: 
 
+# Explicitly grants the workflow runner authority to write changes to your repository
+permissions:
+  contents: write
+
 jobs:
   download-and-commit:
     runs-on: ubuntu-24.04
     steps:
-      # Step 1: Upgraded to version 5 to cleanly target the Node 24 architecture
+      # Step 1: Securely pull your repository files using Node 24 runtime
       - name: Checkout Repository
         uses: actions/checkout@v5
         with:
