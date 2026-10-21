@@ -14,16 +14,16 @@ jobs:
   download-and-commit:
     runs-on: ubuntu-24.04
     steps:
-      # Step 1: Initialize the repository workspace
+      # Step 1: Initialize the repository workspace safely using Node 24
       - name: Checkout Repository
         uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 2: Clear the typo link, call the real API, and overwrite the "IP" file directly
+      # Step 2: Fixed error 23 by downloading the data inside the IP folder as a file
       - name: Fetch Latest IPs
         run: |
-          curl -fsS -o IP https://api.tweetfeed.live/v1/blocklist/ips.txt
+          curl -fsS -o IP/ips.txt https://api.tweetfeed.live/v1/blocklist/ips.txt
 
       # Step 3: Commit and Push changes safely
       - name: Commit and Push Changes
@@ -31,7 +31,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git add IP
+          git add IP/ips.txt
           
           # Only commit if TweetFeed actually updated their list
           if ! git diff --cached --quiet; then
