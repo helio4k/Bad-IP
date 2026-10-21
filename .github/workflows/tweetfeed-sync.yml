@@ -11,9 +11,9 @@ jobs:
   download-and-commit:
     runs-on: ubuntu-24.04
     steps:
-      # Step 1: Fixed warning by updating checkout to target the latest v4 release
+      # Step 1: Force GitHub to pull the Node 24 version by using the explicit commit SHA
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@eef6142ac128cdb7014cb933157cada9994342ee # Pinned to v4.2.1 (compiled for Node 24)
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -27,7 +27,7 @@ jobs:
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "41898282+github-actions[bot]@://github.com"
           
           git add IP/tweetfeed_ips.txt
           
