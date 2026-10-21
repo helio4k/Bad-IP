@@ -1,0 +1,40 @@
+name: Fetch TweetFeed Blocklist
+
+on:
+  schedule:
+    # Runs automatically every 2 hours
+    - cron: '0/20 * * * *'
+  # Allows manual triggers from the Actions tab
+  workflow_dispatch: 
+
+jobs:
+  download-and-commit:
+    runs-on: ubuntu-24.04
+    steps:
+      # Step 1: Initialize the helio4k/Bad-IP workspace
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 2: Download the plain text IP list into your existing IP folder
+      - name: Fetch Latest IPs
+        run: |
+          mkdir -p IP
+          curl -fsS -o IP/tweetfeed_ips.txt https://api.tweetfeed.live/v1/blocklist/ips.txt
+
+      # Step 3: Commit and Push changes safely
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add IP/tweetfeed_ips.txt
+          
+          # Only commit if TweetFeed actually updated their list
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: auto-update tweetfeed blocklist [skip ci]"
+            git push
+          else
+            echo "No new IP updates detected."
+          fi
