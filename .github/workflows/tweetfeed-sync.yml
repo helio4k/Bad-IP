@@ -7,7 +7,6 @@ on:
   # Allows manual triggers from the Actions tab
   workflow_dispatch: 
 
-# Explicitly grants the workflow runner authority to write changes to your repository
 permissions:
   contents: write
 
@@ -15,17 +14,16 @@ jobs:
   download-and-commit:
     runs-on: ubuntu-24.04
     steps:
-      # Step 1: Securely pull your repository files using Node 24 runtime
+      # Step 1: Initialize the repository workspace
       - name: Checkout Repository
         uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 2: Download the plain text IP list into your existing IP folder
+      # Step 2: Clear the typo link, call the real API, and overwrite the "IP" file directly
       - name: Fetch Latest IPs
         run: |
-          mkdir -p IP
-          curl -fsS -o IP/tweetfeed_ips.txt https://tweetfeed.live
+          curl -fsS -o IP https://api.tweetfeed.live/v1/blocklist/ips.txt
 
       # Step 3: Commit and Push changes safely
       - name: Commit and Push Changes
@@ -33,7 +31,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git add IP/tweetfeed_ips.txt
+          git add IP
           
           # Only commit if TweetFeed actually updated their list
           if ! git diff --cached --quiet; then
