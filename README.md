@@ -1,6 +1,6 @@
 # Bad-IP
 
-#Bad Ip Block List
+Bad Ip Block List
 
 IP list fetched from Source: <https://tweetfeed.live/malicious-ips/>
 
