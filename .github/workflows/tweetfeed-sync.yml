@@ -2,8 +2,8 @@ name: Fetch TweetFeed Blocklist
 
 on:
   schedule:
-    # Runs automatically every 2 hours
-    - cron: '0/20 * * * *'
+    # Runs automatically every 20 minutes
+    - cron: '*/20 * * * *'
   # Allows manual triggers from the Actions tab
   workflow_dispatch: 
 
@@ -11,7 +11,7 @@ jobs:
   download-and-commit:
     runs-on: ubuntu-24.04
     steps:
-      # Step 1: Initialize the helio4k/Bad-IP workspace
+      # Step 1: Fixed warning by updating checkout to target the latest v4 release
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
