@@ -9,3 +9,11 @@ A malicious URL feed is a continuously updated list of links that point to phish
 **Are these URLs verified malicious?** 
 
 TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking.
+
+**Is the malicious URLs list free?**
+
+Yes. Every TweetFeed feed is free and released into the public domain under CC0 1.0, with no API key, sign-up or rate card. You can use it in commercial or personal projects; a link back is appreciated but not required.
+
+**License**
+
+IOC data: CC0 1.0 Public Domain. No attribution required, no warranty.
